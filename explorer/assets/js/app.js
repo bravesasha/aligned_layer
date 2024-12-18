@@ -7,12 +7,14 @@ import darkModeHook from "../vendor/dark_mode";
 import searchFocusHook from "../vendor/search_focus";
 import tooltipHook from "../vendor/tooltip";
 import copyToClipboardHook from "../vendor/clipboard";
+import chartHook from "../vendor/chart";
 
 let Hooks = {};
 Hooks.DarkThemeToggle = darkModeHook;
 Hooks.SearchFocus = searchFocusHook;
 Hooks.TooltipHook = tooltipHook;
 Hooks.CopyToClipboard = copyToClipboardHook;
+Hooks.ChartHook = chartHook;
 
 let csrfToken = document
 	.querySelector("meta[name='csrf-token']")

@@ -1,6 +1,16 @@
 defmodule ExplorerWeb.Home.Index do
   require Logger
+  import ExplorerWeb.ChartComponents
   use ExplorerWeb, :live_view
+
+  def get_batch_size_chart_data() do
+    data = Batches.get_batch_size_of_last_n_batches(100)
+
+    %{
+      data: Enum.map(data, fn{batch_size, _} -> batch_size end),
+      labels: Enum.map(data, fn {_, submission_block_number} -> submission_block_number end)
+    }
+  end
 
   @impl true
   def handle_info(_, socket) do
@@ -26,7 +36,8 @@ defmodule ExplorerWeb.Home.Index do
        latest_batches: latest_batches,
        verified_proofs: verified_proofs,
        restaked_amount_eth: restaked_amount_eth,
-       restaked_amount_usd: restaked_amount_usd
+       restaked_amount_usd: restaked_amount_usd,
+       batch_size_chart_data: get_batch_size_chart_data()
      )}
   end
 
@@ -58,6 +69,7 @@ defmodule ExplorerWeb.Home.Index do
          AlignedLayerServiceManager.get_aligned_layer_service_manager_address(),
        restaked_amount_eth: restaked_amount_eth,
        restaked_amount_usd: restaked_amount_usd,
+       batch_size_chart_data: get_batch_size_chart_data(),
        page_title: "Welcome"
      )}
   rescue
